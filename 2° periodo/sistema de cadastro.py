@@ -1,36 +1,50 @@
-def adicionar_cliente(clientes):
-    nome = input("Nome: ")
-    email = input("E-mail: ")
-    telefone = input("Telefone: ")
-    endereco = input("Endereço: ")
-    clientes.append([nome, email, telefone, endereco])
-    print("Cliente adicionado com sucesso!")
+clientes = {}
 
-def exibir_clientes(clientes):
-    if len(clientes) == 0:
-        print("Nenhum cliente cadastrado.")
+def adicionar_cliente():
+    email = input("Digite o seu email: ")
+    if email in clientes:
+        print("Cliente já cadastrado!")
     else:
-        for cliente in clientes:
-            print(f"Nome: {cliente[0]}, E-mail: {cliente[1]}, Telefone: {cliente[2]}, Endereço: {cliente[3]}")
+        nome = input("Informe o nome do usuário: ")
+        telefone = input('Digite o telefone do cliente: ')
+        endereco = input("Digite o endereço do cliente: ")
 
-def buscar_cliente(clientes):
-    email = input("Digite o e-mail do cliente: ")
-    for cliente in clientes:
-        if cliente[1] == email:
-            print(f"Cliente encontrado: Nome: {cliente[0]}, Telefone: {cliente[2]}, Endereço: {cliente[3]}")
-            return
-    print("Cliente não encontrado.")
+        clientes[email] = {
+            'Nome': nome,
+            'Email': email,
+            'Telefone': telefone,
+            'Endereço': endereco
+        }
+        print(f'Cliente {nome} registrado com sucesso!')
 
-def remover_cliente(clientes):
+def exibir_clientes():
+    for cliente in clientes.values():
+        print(cliente['Nome'])
+        print(cliente['Telefone'])
+        print(cliente['Email'])
+        print(cliente['Endereço'])
+    if len(clientes) == 0:
+        print("Nenhum usuario registrado.")
+    
+def buscar_cliente():
+    email = input('Informe o email do cliente: ')
+    if email in clientes:
+        cliente = clientes[email]
+        print(f'Nome: {cliente['Nome']}')
+        print(f'Email: {cliente['Email']}')
+        print(f'Endereço: {cliente['Endereço']}')
+        print(f'Telefone: {cliente['Telefone']}')
+    else:
+        print('Cliente não registrado:')
+
+def remover_cliente():
     email = input("Digite o e-mail do cliente a ser removido: ")
-    for cliente in clientes:
-        if cliente[1] == email:
-            clientes.remove(cliente)
+    if email in clientes:
+            del clientes[email]
             print("Cliente removido com sucesso!")
-            return
-    print("Cliente não encontrado.")
+    else:
+        print("Cliente não encontrado.")
 
-clientes = []
 while True:
     print("\n1. Adicionar Cliente")
     print("2. Exibir Clientes")
@@ -39,17 +53,18 @@ while True:
     print("5. Sair")
     
     opcao = input("Escolha uma opção: ")
+    print()
 
     if opcao == '1':
-        adicionar_cliente(clientes)
+        adicionar_cliente()
     elif opcao == '2':
-        exibir_clientes(clientes)
+        exibir_clientes()
     elif opcao == '3':
-        buscar_cliente(clientes)
+        buscar_cliente()
     elif opcao == '4':
-        remover_cliente(clientes)
+        remover_cliente()
     elif opcao == '5':
         print("Encerrando o sistema.")
         break
     else:
-        print("Opção inválida. Tente novamente.")
+       print("Opção indisponivel. Tente novamente.")
